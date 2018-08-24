@@ -39,7 +39,7 @@ class WorkingNeuron(Neuron):
         :param small_delta: Difference between actual and nominal values
         """
         for synapse in self.__synapses:
-            big_delta = epsilon * small_delta * synapse.value
+            big_delta = epsilon * small_delta * synapse.neuron.value
             synapse.add_weight(big_delta)
 
     value = property(__get_value)

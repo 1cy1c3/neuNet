@@ -15,6 +15,9 @@ class Synapse:
     def __get_value(self):
         return self.__neuron.value * self.__weight
 
+    def __get_neuron(self):
+        return self.__neuron
+
     def add_weight(self, weight_delta):
         """
         Updates the specific synapse with the computed big delta.
@@ -24,3 +27,4 @@ class Synapse:
         self.__weight += weight_delta
 
     value = property(__get_value)
+    neuron = property(__get_neuron)
