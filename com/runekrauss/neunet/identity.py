@@ -10,3 +10,9 @@ class Identity(Activation):
         Stands for activate(input) = input.
         """
         return input
+
+    def derivate(self, input):
+        """
+        It has a gradient of 1.
+        """
+        return 1

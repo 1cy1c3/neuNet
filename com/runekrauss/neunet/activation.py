@@ -12,7 +12,18 @@ class Activation:
     @abstractmethod
     def activate(self, input):
         """
+        Modifies a pulse.
+
         :param input: Input for computing the image of the function
         :return: Value of the respective function
         """
         raise NotImplementedError('subclasses must override activate()!')
+
+    def derivate(self, input):
+        """
+        Indicates the derivation of a function.
+
+        :param input: Input for computing the image of the function
+        :return: Value of the derived function
+        """
+        raise NotImplementedError('subclasses must override derivative()!')

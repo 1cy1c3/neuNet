@@ -11,3 +11,9 @@ class HyperbolicTangent(Activation):
         Stands for activate(input) = sinh(input) / cosh(input).
         """
         return math.sinh(input) / math.cosh(input)
+
+    def derivate(self, input):
+        """
+        Stands for activate'(input) = 1 - activate(input)^2
+        """
+        return 1 - self.activate(input)**2

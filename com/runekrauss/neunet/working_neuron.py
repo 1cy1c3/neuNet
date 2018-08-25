@@ -1,5 +1,9 @@
 from com.runekrauss.neunet.neuron import Neuron
 from com.runekrauss.neunet.identity import Identity
+from com.runekrauss.neunet.hyperbolic_tangent import HyperbolicTangent
+from com.runekrauss.neunet.piecewise import Piecewise
+from com.runekrauss.neunet.sigmoid import Sigmoid
+from com.runekrauss.neunet.relu import Relu
 
 class WorkingNeuron(Neuron):
     """
@@ -8,7 +12,7 @@ class WorkingNeuron(Neuron):
     data set can also be learned from pixels.
     """
 
-    __activation = Identity()
+    __activation = Relu()
 
     def __init__(self):
         """
@@ -38,8 +42,9 @@ class WorkingNeuron(Neuron):
         :param epsilon: Learning factor between 0 and 1
         :param small_delta: Difference between actual and nominal values
         """
+        big_delta_factor = self.__activation.derivate(self.value) * epsilon * small_delta
         for synapse in self.__synapses:
-            big_delta = epsilon * small_delta * synapse.neuron.value
+            big_delta = big_delta_factor * synapse.neuron.value
             synapse.add_weight(big_delta)
 
     value = property(__get_value)

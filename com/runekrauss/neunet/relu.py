@@ -11,3 +11,9 @@ class Relu(Activation):
         Stands for max(input) = {0 for input <= 0, input otherwise}.
         """
         return max(0, input)
+
+    def derivate(self, input):
+        """
+        The derivation of the ReLU function for negative values is 0 and for all positive values 1.
+        """
+        return 0 if input < 0 else 1
