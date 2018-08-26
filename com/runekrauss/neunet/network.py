@@ -16,6 +16,15 @@ class Network:
         self.__hidden_neurons = []
         self.__output_neurons = []
 
+    def reset(self):
+        """
+        Resets all neurons.
+        """
+        for output_neuron in self.__output_neurons:
+            output_neuron.reset()
+        for hidden_neuron in self.__hidden_neurons:
+            hidden_neuron.reset()
+
     def create_input_neuron(self):
         input_neuron = InputNeuron()
         self.__input_neurons.append(input_neuron)
@@ -32,26 +41,51 @@ class Network:
         self.__output_neurons.append(output_neuron)
         return output_neuron
 
-    def delta_learning(self, nominal_values, epsilon):
+    def backpropagation(self, nominal_values, epsilon):
         """
-        The delta rule is a gradient descent learning rule for updating the weights of the inputs to artificial neurons
-        in a single-layer neural network. First, initializes the weight vector with random numbers or zeros. Afterwards,
-        computes an output for each sample and updates the weights. This process is repeated until the error is smaller
-        than the threshold value. Overall, the error function is to be minimized.
+        Backpropagation is a method to calculate a gradient that is needed in the computing of the weights to be used in
+        the network. There are two main steps:
+            1. Propagates the input sample through the network and compares nominal and actual value (calculate \delta).
+            2. Determines the error and passes the \delta back through the network.
+        Afterwards, the delta learning is applied. The delta rule is a gradient descent learning rule for updating the
+        weights of the inputs to artificial neurons in a neural network. First, initializes the weight
+        vector with random numbers or zeros. Afterwards, calculates an output for each sample and updates the weights.
+        This process is repeated until the error is smaller than the threshold value. Overall, the error function is to
+        be minimized. The method is generic, i. e. it also works with single layer perceptrons.
 
         :param nominal_values: Nominal values regarding supervised learning
         :param epsilon: Learning factor between 0 and 1
         """
         if len(nominal_values) != len(self.__output_neurons):
             raise Exception("The length of shoulds is illegal!")
-        if len(self.__hidden_neurons) != 0:
-            raise Exception("The are hidden neurons!")
+
+        # Enable learning
+        self.reset()
+
+        # Calculate the small delta regarding output neurons
         i = 0
         while i < len(nominal_values):
-           small_delta = nominal_values[i] - self.__output_neurons[i].value
-           # Update weight
-           self.__output_neurons[i].delta_learning(epsilon, small_delta)
-           i = i + 1
+            self.__output_neurons[i].calculate_output_delta(nominal_values[i])
+            i = i + 1
+
+        # Propagate the small delta back to hidden neurons
+        if len(self.__hidden_neurons) > 0:
+            i = 0
+            while i < len(nominal_values):
+                self.__output_neurons[i].backpropagate_small_delta()
+                i = i + 1
+
+        # Do delta learning
+        i = 0
+        while i < len(nominal_values):
+            self.__hidden_neurons[i].delta_learning(epsilon)
+            i = i + 1
+        i = 0
+        while i < len(nominal_values):
+            self.__hidden_neurons[i].delta_learning(epsilon)
+            i = i + 1
+        for hidden_neuron in self.__hidden_neurons:
+            hidden_neuron.delta_learning(epsilon)
 
     def create_full_mesh(self, weights):
         """

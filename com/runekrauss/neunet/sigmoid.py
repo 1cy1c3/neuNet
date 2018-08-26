@@ -11,7 +11,9 @@ class Sigmoid(Activation):
         """
         Stands for activate(input) = 1 / (1+e^{-input}).
         """
-        return 1.0 / (1.0 + math.pow(math.e, -input))
+        if input < 0:
+            return 1 - 1 / (1 + math.exp(input))
+        return 1 / (1 + math.exp(-input))
 
     def derivate(self, input):
         """

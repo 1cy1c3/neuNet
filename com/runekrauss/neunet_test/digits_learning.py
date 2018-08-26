@@ -21,6 +21,12 @@ input_neurons = [[0] * 8] * 8
 # Create 10 output neurons
 output_neurons = [0] * 10
 
+# Number of hidden neurons
+number_of_hidden_neurons = 100
+
+# Initialize the neuronal network
+network = Network()
+
 class ProbabilityDigit:
     """
     Holds the propabilities for every digit (0-9).
@@ -44,16 +50,13 @@ def test():
     row = 0
     while row < len(test_data):
         col = 0
-        x = 0
+        network.reset()
         # Assign sample to the input neurons
         for x in range(len(input_neurons)):
-            y = 0
-            while y in range(len(input_neurons[x])):
+            for y in range(len(input_neurons[x])):
                 # Adapt value between 0/1
                 input_neurons[x][y].value = test_data[row][col] / 16
                 col = col + 1
-                y = y + 1
-            x = x + 1
         # Outputs (hyperplanes) for discrete probabilities regarding the softmax layer
         probs = [0] * 10
         for k in range(0, 10):
@@ -70,7 +73,7 @@ def test():
         else:
             incorrect = incorrect + 1
         row = row + 1
-    # Compute the accuracy and print it
+    # Calculate the accuracy and print it
     accuracy = correct / (correct + incorrect)
     print(accuracy)
 
@@ -104,48 +107,45 @@ def main():
             Fills the input neurons with the pixel values of the digit.
             Gets the outputs as propabilities for the digits.
             Sorts them by the highest probability and compare it with the right label.
-            Computes the accuracy.
+            Calculates the accuracy.
         Fills the input neurons with the pixel values of the digit.
         Sets the respective digit to 1.
         Uses delta learning to train the neuronal network.
     """
-    # Create neuronal network with 8*8 input (matrix) and 10 output neurons
-    network = Network()
+    # Create the neuronal network with 8*8 input (matrix) and 10 output neurons as well as 100 hidden neurons
     for i in range(len(input_neurons)):
         for j in range(len(input_neurons[i])):
             input_neurons[i][j] = network.create_input_neuron()
     for i in range(len(output_neurons)):
         output_neurons[i] = network.create_output_neuron()
+    number_of_hidden_neurons = 100
+    network.create_hidden_neurons(number_of_hidden_neurons)
 
     # Fill the 8*8*10 weight vector with random data and connect the neurons to each other
     weights = []
-    synapses = 8*8*10
+    synapses = 8*8*number_of_hidden_neurons + number_of_hidden_neurons*10
     for i in range(synapses):
         weights.append(random.random())
     network.create_full_mesh(weights)
 
     # Learning stage
-    epsilon = 0.01
+    epsilon = 0.005
     while 1:
         test()
         row = 0
         while row < len(train_data):
             col = 0
-            x = 0
             # Assign sample to the input neurons
             for x in range(len(input_neurons)):
-                y = 0
                 for y in range(len(input_neurons[x])):
                     # Adapt value between 0/1
                     input_neurons[x][y].value = train_data[row][col] / 16
                     col = col + 1
-                    y = y + 1
-                x = x + 1
             # Use one hot encoding (labels are nominally scaled) to ensure equal distance regarding the digits
             shoulds = [0] * 10
             shoulds[train_target[row]] = 1
             # Delta learning
-            network.delta_learning(shoulds, epsilon)
+            network.backpropagation(shoulds, epsilon)
             row = row + 1
         epsilon *= 0.9
 

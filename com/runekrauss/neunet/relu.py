@@ -2,7 +2,7 @@ from com.runekrauss.neunet.activation import Activation
 
 class Relu(Activation):
     """
-    This function is easy to compute and there is a more effective training compared to sigmoid. However, it can
+    This function is easy to calculate and there is a more effective training compared to sigmoid. However, it can
     explode and is not differentiated into 0.
     """
 
