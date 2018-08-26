@@ -12,7 +12,7 @@ class WorkingNeuron(Neuron):
     data set can also be learned from pixels.
     """
 
-    __activation = Sigmoid()
+    __activation = Relu()
 
     def __init__(self):
         """

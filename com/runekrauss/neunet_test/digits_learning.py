@@ -49,8 +49,8 @@ def test():
     incorrect = 0
     row = 0
     while row < len(test_data):
-        col = 0
         network.reset()
+        col = 0
         # Assign sample to the input neurons
         for x in range(len(input_neurons)):
             for y in range(len(input_neurons[x])):
@@ -118,7 +118,6 @@ def main():
             input_neurons[i][j] = network.create_input_neuron()
     for i in range(len(output_neurons)):
         output_neurons[i] = network.create_output_neuron()
-    number_of_hidden_neurons = 100
     network.create_hidden_neurons(number_of_hidden_neurons)
 
     # Fill the 8*8*10 weight vector with random data and connect the neurons to each other
