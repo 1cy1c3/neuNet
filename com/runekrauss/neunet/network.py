@@ -15,6 +15,8 @@ class Network:
         self.__input_neurons = []
         self.__hidden_neurons = []
         self.__output_neurons = []
+        # How many pictures?
+        self.__training_sample = 0
 
     def reset(self):
         """
@@ -86,6 +88,17 @@ class Network:
             i = i + 1
         for hidden_neuron in self.__hidden_neurons:
             hidden_neuron.delta_learning(epsilon)
+
+        # Apply batch learning
+        if (self.__training_sample % 64 == 0):
+            i = 0
+            while i < len(nominal_values):
+                self.__hidden_neurons[i].apply_batch()
+                i = i + 1
+            for hidden_neuron in self.__hidden_neurons:
+                hidden_neuron.apply_batch()
+        self.__training_sample = self.__training_sample + 1
+
 
     def create_full_mesh(self, weights):
         """

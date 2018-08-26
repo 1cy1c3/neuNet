@@ -79,4 +79,11 @@ class WorkingNeuron(Neuron):
             if (isinstance(neuron, WorkingNeuron)):
                 neuron.__small_delta += self.__small_delta * synapse.weight
 
+    def apply_batch(self):
+        """
+        Applies batch learning regarding each connection.
+        """
+        for synapse in self.__synapses:
+            synapse.apply_batch()
+
     value = property(__get_value)
