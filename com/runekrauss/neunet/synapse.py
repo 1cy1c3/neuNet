@@ -24,7 +24,7 @@ class Synapse:
     def __get_weight(self):
         return self.__weight
 
-    def apply_batch(self):
+    def apply_batch_training(self):
         """
         Applies batch learning, i. e. the weight is only adjusted after several images. To avoid the problem with
         plateaus and oscillations, the momentum is used. Batch learning supports this procedure regarding the

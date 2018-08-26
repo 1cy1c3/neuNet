@@ -12,7 +12,7 @@ class WorkingNeuron(Neuron):
     data set can also be learned from pixels.
     """
 
-    __activation = Relu()
+    __activation = Sigmoid()
 
     def __init__(self):
         """
@@ -33,11 +33,17 @@ class WorkingNeuron(Neuron):
 
         :return: Activation level
         """
-        if (self.__is_calculated is False):
+        if self.__is_calculated is False:
             input_sum = sum(synapse.value for synapse in self.__synapses)
             self.__value = self.__activation.activate(input_sum)
             self.__is_calculated = True
         return self.__value
+
+    def __get_activation(self):
+        return self.__activation
+
+    def __set_activation(self, activation):
+        self.__activation = activation
 
     def reset(self):
         """
@@ -76,14 +82,15 @@ class WorkingNeuron(Neuron):
         """
         for synapse in self.__synapses:
             neuron = synapse.neuron
-            if (isinstance(neuron, WorkingNeuron)):
+            if isinstance(neuron, WorkingNeuron):
                 neuron.__small_delta += self.__small_delta * synapse.weight
 
-    def apply_batch(self):
+    def apply_batch_training(self):
         """
-        Applies batch learning regarding each connection.
+        Applies batch training regarding each connection.
         """
         for synapse in self.__synapses:
-            synapse.apply_batch()
+            synapse.apply_batch_training()
 
     value = property(__get_value)
+    activation = property(__get_activation, __set_activation)

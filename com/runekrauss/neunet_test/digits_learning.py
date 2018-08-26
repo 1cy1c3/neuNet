@@ -11,9 +11,7 @@ digits = load_digits()
 data, target = digits.data, digits.target
 
 # Cross validation: Divide the data into complementary subsets
-train_data, test_data, train_target, test_target = train_test_split(data, target,
-                                                    test_size=0.1,
-                                                    random_state=1)
+train_data, test_data, train_target, test_target = train_test_split(data, target, test_size=0.1, random_state=1)
 
 # Create 8*8 input neurons
 input_neurons = [[0] * 8] * 8

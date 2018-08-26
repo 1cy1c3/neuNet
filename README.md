@@ -15,9 +15,9 @@ At first, clone or download this project. Afterwards, go to the terminal and typ
 ## Usage
 Navigate to the folder `build/lib/com/runekrauss/neunet_test`. There are three test files that show how to work with the neuronal network:
 
-+ single\_layer\_perceptron.py: Creates a simple single layer perceptron.
-+ multi\_layer\_perceptron.py: Creates a multi layer perceptron with one hidden layer.
-+ digits\_learning.py: Trains and tests the neuronal network with respect to the digits dataset.
++ **single\_layer\_perceptron.py**: Creates a simple single layer perceptron.
++ **multi\_layer\_perceptron.py**: Creates a multi layer perceptron with one hidden layer.
++ **digits\_learning.py**: Trains and tests the neuronal network with respect to the digits dataset. The learning process is backpropagation. Methods to increase the performance are the use of a momentum as well as batch training.
 
 For example, type `python3 digits_learning.py` to start the gradient descent learning rule. The outputs are the result of the specific accuracy.
 

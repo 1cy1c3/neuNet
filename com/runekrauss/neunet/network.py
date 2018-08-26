@@ -1,6 +1,7 @@
 from com.runekrauss.neunet.input_neuron import InputNeuron
 from com.runekrauss.neunet.synapse import Synapse
 from com.runekrauss.neunet.working_neuron import WorkingNeuron
+from com.runekrauss.neunet.relu import Relu
 
 class Network:
     """
@@ -36,7 +37,9 @@ class Network:
         if amount <= 0:
             raise Exception("The amount is illegal!")
         for i in range(0, amount):
-            self.__hidden_neurons.append(WorkingNeuron())
+            working_neuron = WorkingNeuron()
+            working_neuron.activation = Relu()
+            self.__hidden_neurons.append(working_neuron)
 
     def create_output_neuron(self):
         output_neuron = WorkingNeuron()
@@ -89,16 +92,15 @@ class Network:
         for hidden_neuron in self.__hidden_neurons:
             hidden_neuron.delta_learning(epsilon)
 
-        # Apply batch learning
-        if (self.__training_sample % 64 == 0):
+        # Apply batch training
+        if self.__training_sample % 64 == 0:
             i = 0
             while i < len(nominal_values):
-                self.__hidden_neurons[i].apply_batch()
+                self.__hidden_neurons[i].apply_batch_training()
                 i = i + 1
             for hidden_neuron in self.__hidden_neurons:
-                hidden_neuron.apply_batch()
+                hidden_neuron.apply_batch_training()
         self.__training_sample = self.__training_sample + 1
-
 
     def create_full_mesh(self, weights):
         """
