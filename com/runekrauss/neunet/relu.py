@@ -6,14 +6,14 @@ class Relu(Activation):
     explode and is not differentiated into 0.
     """
 
-    def activate(self, input):
+    def activate(self, x):
         """
-        Stands for max(input) = {0 for input <= 0, input otherwise}.
+        Stands for max(x) = {0 for x <= 0, x otherwise}.
         """
-        return max(0, input)
+        return max(0, x)
 
-    def derivate(self, input):
+    def derivate(self, x):
         """
         The derivation of the ReLU function for negative values is 0 and for all positive values 1.
         """
-        return 0 if input < 0 else 1
+        return 0 if x < 0 else 1

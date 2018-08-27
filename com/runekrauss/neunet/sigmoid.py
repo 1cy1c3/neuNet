@@ -1,23 +1,24 @@
 from com.runekrauss.neunet.activation import Activation
 import math
 
+
 class Sigmoid(Activation):
     """
     A sigmoid function is a mathematical function having a characteristic "S"-shaped curve. Furthermore, this function
     is continuous. A small change changes the overall result only minimally.
     """
 
-    def activate(self, input):
+    def activate(self, x):
         """
-        Stands for activate(input) = 1 / (1+e^{-input}).
+        Stands for activate(x) = 1 / (1+e^{-x}).
         """
-        if input < 0:
-            return 1 - 1 / (1 + math.exp(input))
-        return 1 / (1 + math.exp(-input))
+        if x < 0:
+            return 1 - 1 / (1 + math.exp(x))
+        return 1 / (1 + math.exp(-x))
 
-    def derivate(self, input):
+    def derivate(self, x):
         """
-        Stands for activate'(input) = activate(input) * ( 1 - activate(input) )
+        Stands for activate'(x) = activate(x) * ( 1 - activate(x) )
         """
-        sigmoid = self.activate(input)
+        sigmoid = self.activate(x)
         return sigmoid * (1 - sigmoid)

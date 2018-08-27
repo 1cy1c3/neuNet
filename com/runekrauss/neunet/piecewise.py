@@ -5,13 +5,13 @@ class Piecewise(Activation):
     A piecewise function is a function that is defined on a sequence of intervals.
     """
 
-    def activate(self, input):
+    def activate(self, x):
         """
-        Stands for activate(input) = {0 for input < 0, 1 for input >= 0}.
+        Stands for activate(x) = {0 for x < 0, 1 for x >= 0}.
         """
-        return 0 if input < 0 else 1
+        return 0 if x < 0 else 1
 
-    def derivate(self, input):
+    def derivate(self, x):
         """
         Is not the right derivation, but still works well.
         """

@@ -11,7 +11,7 @@ digits = load_digits()
 data, target = digits.data, digits.target
 
 # Cross validation: Divide the data into complementary subsets
-train_data, test_data, train_target, test_target = train_test_split(data, target, test_size=0.1, random_state=1)
+train_data, test_data, train_target, test_target = train_test_split(data, target, test_size=0.2, random_state=1)
 
 # Create 8*8 input neurons
 input_neurons = [[0] * 8] * 8
@@ -25,6 +25,7 @@ number_of_hidden_neurons = 100
 # Initialize the neuronal network
 network = Network()
 
+
 class ProbabilityDigit:
     """
     Holds the propabilities for every digit (0-9).
@@ -32,8 +33,10 @@ class ProbabilityDigit:
     def __init__(self, digit, probability):
         self.digit = digit
         self.probability = probability
+
     def __lt__(self, other):
         return self.probability < other.probability
+
     def __repr__(self):
         return "%s %s" % (self.digit, self.probability)
 
@@ -75,24 +78,26 @@ def test():
     accuracy = correct / (correct + incorrect)
     print(accuracy)
 
+
 def familiarize_with_digits():
     """
     Familiarizes himself with the digits dataset.
     """
     # Create feature matrix
-    data = digits.data
+    digits_data = digits.data
     # Create target vector
-    target = digits.target
+    digits_target = digits.target
     # size of feature matrix
-    print(data.shape)
+    print(digits_data.shape)
     # size of target vector
-    print(target.shape)
+    print(digits_target.shape)
     # View the first observation's feature values
-    print(data[0])
+    print(digits_data[0])
     # Visualize the first observation's feature values as an image
     plt.gray()
     plt.matshow(digits.images[2])
     plt.show()
+
 
 def main():
     """
@@ -144,7 +149,8 @@ def main():
             # Delta learning
             network.backpropagation(shoulds, epsilon)
             row = row + 1
-        epsilon *= 0.9
+        epsilon *= 0.99
+
 
 if __name__ == '__main__':
     main()

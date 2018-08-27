@@ -1,17 +1,18 @@
 from com.runekrauss.neunet.activation import Activation
 
+
 class Identity(Activation):
     """
     An identity function is a function that always returns the same value that was used as its argument.
     """
 
-    def activate(self, input):
+    def activate(self, x):
         """
-        Stands for activate(input) = input.
+        Stands for activate(x) = x.
         """
-        return input
+        return x
 
-    def derivate(self, input):
+    def derivate(self, x):
         """
         It has a gradient of 1.
         """

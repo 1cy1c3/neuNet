@@ -1,5 +1,6 @@
 from com.runekrauss.neunet.network import Network
 
+
 def main():
     """
     A single layer perceptron has two layers for input and output neurons. So it is a linear classifier for two classes
@@ -20,6 +21,7 @@ def main():
     input_neuron3.value = 3
     input_neuron4.value = 4
     print(output_neuron1.value)
+
 
 if __name__ == '__main__':
     main()

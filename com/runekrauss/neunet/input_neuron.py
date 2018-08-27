@@ -1,11 +1,12 @@
 from com.runekrauss.neunet.neuron import Neuron
 
+
 class InputNeuron(Neuron):
     """
     Get input values and forwards it. The default value is 0. For this reason, a direct access is possible.
     """
     def __init__(self):
-        self.__value = 0;
+        self.__value = 0
 
     def __get_value(self):
         return self.__value

@@ -1,9 +1,5 @@
 from com.runekrauss.neunet.neuron import Neuron
-from com.runekrauss.neunet.identity import Identity
-from com.runekrauss.neunet.hyperbolic_tangent import HyperbolicTangent
-from com.runekrauss.neunet.piecewise import Piecewise
 from com.runekrauss.neunet.sigmoid import Sigmoid
-from com.runekrauss.neunet.relu import Relu
 
 class WorkingNeuron(Neuron):
     """
@@ -20,9 +16,9 @@ class WorkingNeuron(Neuron):
         """
         self.__synapses = []
         # Difference between actual and nominal values
-        self.__small_delta = 0
+        self.__small_delta = 0.0
         # Actual value
-        self.__value = 0
+        self.__value = 0.0
         # Has the value already been calculated?
         self.__is_calculated = False
 
@@ -50,7 +46,7 @@ class WorkingNeuron(Neuron):
         Sets the small deltas for backpropagation to 0 at the beginning.
         """
         self.__is_calculated = False
-        self.__small_delta = 0
+        self.__small_delta = 0.0
 
     def add_synapse(self, synapse):
         self.__synapses.append(synapse)

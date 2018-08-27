@@ -3,6 +3,7 @@ from com.runekrauss.neunet.synapse import Synapse
 from com.runekrauss.neunet.working_neuron import WorkingNeuron
 from com.runekrauss.neunet.relu import Relu
 
+
 class Network:
     """
     A neural network is a mathematical replica of the neurons in our brain, but neural network != brain because
@@ -83,20 +84,16 @@ class Network:
         # Do delta learning
         i = 0
         while i < len(nominal_values):
-            self.__hidden_neurons[i].delta_learning(epsilon)
-            i = i + 1
-        i = 0
-        while i < len(nominal_values):
-            self.__hidden_neurons[i].delta_learning(epsilon)
+            self.__output_neurons[i].delta_learning(epsilon)
             i = i + 1
         for hidden_neuron in self.__hidden_neurons:
             hidden_neuron.delta_learning(epsilon)
 
-        # Apply batch training
+        # Apply batch training (avoid overfitting)
         if self.__training_sample % 64 == 0:
             i = 0
             while i < len(nominal_values):
-                self.__hidden_neurons[i].apply_batch_training()
+                self.__output_neurons[i].apply_batch_training()
                 i = i + 1
             for hidden_neuron in self.__hidden_neurons:
                 hidden_neuron.apply_batch_training()
@@ -135,7 +132,8 @@ class Network:
                         output_neuron.add_synapse(Synapse(input_neuron, weights[index]))
                         index += 1
             else:
-                if len(weights) != len(self.__input_neurons) * len(self.__hidden_neurons) + len(self.__hidden_neurons) * len(self.__output_neurons):
+                if len(weights) != len(self.__input_neurons) * len(self.__hidden_neurons) + len(self.__hidden_neurons) \
+                        * len(self.__output_neurons):
                     raise Exception("The weights size is illegal!")
                 index = 0
                 for hidden_neuron in self.__hidden_neurons:

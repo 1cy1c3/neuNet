@@ -1,5 +1,6 @@
 from com.runekrauss.neunet.network import Network
 
+
 def main():
     """
     A single layer perceptron fails, for example, because of the XOR problem. A multi layer perceptron is a deep
@@ -24,6 +25,7 @@ def main():
     input_neuron3.value = 3
     input_neuron4.value = 4
     print(output_neuron1.value)
+
 
 if __name__ == '__main__':
     main()
